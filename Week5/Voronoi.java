@@ -26,11 +26,37 @@ public class Voronoi {
     }
 
     public static int[][] buildVoronoiMap(Point2D[] sites, int width, int height) {
-        // ADD CODE HERE
+        int [][] voronoiMap = new int[width][height];
+
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < height; j++){
+                voronoiMap [i][j] = findClosestPoint(new Point2D(i,j), sites);
+            }
+        }
+        return voronoiMap;
     }
 
     public static void plotVoronoiMap(Point2D[] sites, Color[] colors, int[][] indexMap) {
-        // ADD CODE HERE
+        int width = indexMap.length;
+        int height = indexMap[0].length;
+
+        StdDraw.setCanvasSize(width, height);
+        StdDraw.setXscale(0, width);
+        StdDraw.setYscale(0, height);
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                int index = indexMap[i][j];
+                StdDraw.setPenColor(colors[index]);
+                StdDraw.point(i, j);
+            }
+        }
+
+        for (int i = 0; i < sites.length; i++) {
+            StdDraw.setPenColor(Color.BLACK);
+            StdDraw.filledCircle(sites[i].getX(), sites[i].getY(), 3);
+        }
+        StdDraw.show();
     }
 
     public static void main(String[] args) {
